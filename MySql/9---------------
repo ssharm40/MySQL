@@ -1,0 +1,40 @@
+1) Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+
+select distinct(CITY) from STATION where left(CITY,1) not in ('a','e','i','o','u') or right(CITY, 1) not in ('a','e','i','o','u');
+
+
+
+
+2) Query the Name of any student in STUDENTS who scored higher than  Marks. Order your output by the last three characters of each name. 
+If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
+
+
+select Name from STUDENTS where Marks>75 order by right(Name,3) asc, id asc;
+
+
+
+
+3) print all name by order:
+
+select Name from Employee order by Name;
+
+
+# To check Null Values
+
+Select first_name, last_name from employee where address is null
+
+
+
+
+#--------------------Group By
+
+The GROUP BY statement groups rows that have the same values into summary rows, like "find the number of customers in each country".
+The GROUP BY statement is often used with aggregate functions (COUNT(), MAX(), MIN(), SUM(), AVG()) to group the result-set by one or more columns.
+
+
+GROUP BY Syntax
+
+select column_name from table_name where condition group_by column_name order_by column_name
+
+#SQL statement lists the number of customers in each country:
+select count(CustomerName), Country from employee group by Country order by Country

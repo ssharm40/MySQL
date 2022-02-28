@@ -1,0 +1,151 @@
+/*
+My SQL Index-----  
+Exp- In our notebook we use the index page to check the data in book
+Similarly we use the idex in mysql also
+
+CREATE INDEX  statment in sql is used to create indexes in tables.
+==> Spead up the process of retreiving the data from table
+==> Degrade the speed of insert/update as now we need to update index also.
+
+*/
+
+show databases;
+
+drop database customer;
+
+create database customer;
+
+show databases;
+
+use customer;
+
+show tables;
+
+create table Student (
+id int not null,
+first_name varchar(25),
+last_name varchar(27),
+age int
+);
+
+desc Student;
+
+
+create index index_age on Student(age);
+
+desc Student;
+
+
+#To see index
+SHOW INDEX FROM Student;
+
+
+#If you want to create two index:
+
+create index index_age_firstname on Student(age, first_name);
+
+show index from Student;
+
+
+alter table Student drop index index_age_firstname;
+
+
+/*
+View------
+View is a VIRTUAL TABLE based on the result of an any query.
+
+ADVANTAGE 1: let's say we have 1 student table(id primary key, and some other column) and 
+1 Department table(id(foreign key), and other columns) so we want the details from both table on behalf of id.
+Here we will perform the Inner Join and get the data, and this query we can assign as view
+so that whenever you call this name this inner join query willl be executed automatically.
+
+
+Advantage 2: You have 20 tables in your database and one junior person comes to you ans ask to share data but there is some 
+important that you don't want to share and even junior also require data from only 2 tables.
+so you can fetch the data and assign that as view and share the name of view.
+
+
+Qus: Can we use view forany knid of query?
+No, Complex query can not use as view. like agg func, groupby, having, update, insert, union, left outer join, 
+outer join  not work in view
+
+
+
+*/
+
+drop database customer;
+
+create database customer;
+
+use customer;
+
+create table student(
+student_id int auto_increment,
+first_name varchar(25) not null,
+last_name varchar(25) not null,
+age int,
+primary key(student_id)
+);
+
+desc student;
+
+
+Insert into student values(1,'Krish','Naik',30), (2,'Krish2','Naik2',31), (3,'Krish3','Naik3',32);
+
+
+Insert into student values(4,'Krish4','Naik4',34);
+
+
+
+select * from student;
+
+
+
+
+#Let's create one more table
+create table department(
+student_id int,
+department_name varchar(25),
+foreign key (student_id) references student(student_id)
+);
+
+desc department;
+
+Insert into department values(1, 'CS'), (2, 'Elec'), (3, 'Mech'), (4, '4th type');
+
+select * from department;
+
+
+#Create inner join to fetch data from both table
+
+select first_name, last_name, age, department_name from student inner join department using (student_id);
+
+#So now we can assign this query to view
+CREATE VIEW student_info as
+select first_name, last_name, age, department_name from student inner join department using (student_id);
+
+
+#Now by view name you can use this
+
+select * from student_info;
+
+
+#Drop view
+drop view student_info;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

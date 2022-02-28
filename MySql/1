@@ -1,0 +1,52 @@
+/*
+Agenda-
+
+1- SQL Create Database
+2- SQL Drop Database
+3- SQL Create Table
+4- SQL Insert into table
+5- SQL Drop Table
+
+*/
+
+
+#To Show databases
+show databases;
+
+#Now create our own database
+create database customer;
+
+#Now to check is it created or not?
+
+show databases;
+
+#Let's use the database
+use customer;
+
+#To check how many tables are present in this database?
+show tables;
+
+#Let's create a Table---
+Create table customer_info(id integer, first_name varchar(20), last_name varchar(10));
+
+#Let's validate this table is created or not?
+show tables;
+
+#Now Insert the data in this table
+Insert into customer_info(id, first_name, last_name) values(1, 'Krish', 'Naik');
+Insert into customer_info(id, first_name, last_name) values(2, "Krish", "Naik");
+Insert into customer_info values(3, 'Deepesh', 'Yadav');
+
+
+# Let's see this data in table
+select * from customer_info;
+
+
+# Now Drop Table
+drop table customer_info;
+show tables;
+
+# Now drop the database also
+drop database customer;
+drop database krish;
+show  databases

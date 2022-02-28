@@ -1,0 +1,112 @@
+use company;
+
+show tables;
+
+select * from employee;
+select * from bonus;
+select * from designation;
+
+
+/*
+1----- dispaly name of employees who's first name start with letter 'K'
+*/
+# By Left function
+select first_name from employee where left(first_name, 1) in ('S', 'K');
+
+#By Like
+select first_name from employee where first_name like 'S%';
+
+
+
+/*
+2------- An SQL query to print all the details of the employees ehose salary between 100000 & 550000
+*/
+select first_name, last_name from employee where salary between 100000 and 550000;
+
+#Let's say you want to combine the name(first_name + last_name)
+select concat(first_name, ' ',last_name) as Full_Name from employee where salary between 100000 and 550000;
+
+select concat(first_name, ' ',last_name) as Full_Name, salary from employee where salary between 100000 and 550000;
+
+
+
+/*
+3--------SQL Query to retrieve details of employee who have joined on date
+
+*/
+
+
+
+#So whenever we have date as datatype so we have some extra function
+
+select * from employee;
+
+
+# Who join on 2014
+select concat(first_name, ' ',last_name) as Full_Name, salary, joining_date from employee where year(joining_date)='2014';
+
+#Who join on dec-1014
+select concat(first_name, ' ',last_name) as Full_Name, salary, joining_date from employee where year(joining_date)=2014 and month(joining_date)=12 and day(joining_date)=11;
+
+
+# Query to fetch number of employee in every department
+
+#How many department
+select count(distinct(department)) from employee;
+
+select department,count(*) from employee group by department;
+
+
+
+############################# Intermediate
+
+/*
+To print details of the employees who are also executive
+*/
+
+select * from employee;
+select * from designation;
+
+select employee.emp_id, employee.first_name, employee.last_name, employee.salary, designation.designation from employee inner join designation on 
+employee.emp_id= designation.emp_ref_id 
+and 
+designation.designation='Executive';
+
+
+#If you need a list of require designation
+select employee.emp_id, employee.first_name, employee.last_name, employee.salary, designation.designation from employee inner join designation on 
+employee.emp_id= designation.emp_ref_id 
+and 
+designation.designation in ('Executive','Manager');
+
+
+/*
+SQL Query to clone a new table from another table
+*/
+
+create table clone_table like employee;
+desc employee;
+select * from clone_table;
+
+Insert into clone_table select * from employee;
+select * from clone_table;
+
+
+/*
+Show top n salary of employees
+*/
+
+select first_name, salary from employee order by Salary;
+
+select first_name, salary from employee order by Salary desc;
+
+select concat(first_name,' ',last_name) as Full_Name, salary from employee order by salary desc limit 5; 
+
+
+/*
+Query to determine the 6th highest salary
+*/
+
+# limit parameter--------- limit n-1, 1
+
+select concat(first_name,' ',last_name) as Full_Name, salary from employee order by salary desc limit 4,1;

@@ -1,0 +1,90 @@
+/*
+Agenda
+
+SQL Null Values
+SQL update statement
+SQL delete statement
+SQL alter table
+   ---Add Column in existing table
+   ---Modify/Alter Column
+   ---Drop Column
+
+*/
+
+create database customer;
+
+show databases;
+
+Use customer;
+
+#Create customer_info table
+
+create table customer_info(
+id integer auto_increment,
+first_name varchar(25),
+last_name varchar(25),
+salary integer,
+primary key(id)
+);
+
+show tables;
+
+#To see the schema
+desc customer_info;
+
+#See the data
+select * from customer_info;
+
+
+#Insert records in table
+
+Insert into customer_info(first_name, last_name, salary) values
+('Krish','Naik',25000),
+('Shubham','Sharna',650000),
+('Deepesh','Yadav',75000),
+('Abhishek','Saxena',85000),
+('Abhi','Bhatnagar',NULL);
+
+
+select * from customer_info;
+
+
+#So now how to get only null values
+select * from customer_info where salary is null;
+
+#To get records which does not have null value
+select * from customer_info where salary is not null;
+
+#SQL Update Statement
+
+#Let's update the null value
+update customer_info set salary=50000 where id =5;
+
+select * from customer_info;
+
+
+# SQL Delete statement
+delete from customer_info where id=5;
+select * from customer_info;
+
+
+# SQL Alter Table
+
+# Add a column
+alter table customer_info add email varchar(30);
+select * from customer_info;
+
+alter table customer_info add dob date;
+select * from customer_info;
+
+desc customer_info;
+
+#Now change the data type 
+alter table customer_info modify dob year;
+desc customer_info;
+
+
+# Alter command to delete column
+
+alter table customer_info drop column dob;
+desc customer_info 

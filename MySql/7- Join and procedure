@@ -1,0 +1,219 @@
+/*
+SQL JOINS
+
+1 Inner join
+2 Left join
+3 Right join
+4 Full join
+5 Natural join
+6 Cross join
+
+
+What is SQL JOIN?
+SQL JOIN helps you to retrieve data from 2 or more tables.
+=> These tables should be linked by primary foreign key.
+
+
+
+*/
+
+use customer;
+
+show tables;
+
+select * from student;
+#Now insert two more record
+
+Insert into student values(5,'Krish 5','Naik 5',35), (6,'Krish 6','Naik 6',36);
+#Student_id-----primary id
+
+select * from department;
+#student_id---- foreign key
+
+
+#INNER JOIN
+
+#Now we need to retrieve the data from which student belongs to which department
+#So here you get only those records which details are completely exist in both table
+
+select * from student inner join department on student.student_id = department.student_id;
+
+# Now as we can see it fetch all the columns even student_id two times so we should select only needed columns
+
+select student.student_id, student.first_name, student.last_name, department.department_name from student 
+inner join department on student.student_id= department.student_id;
+
+# And as previously we can create this result as views(virtual table) so that we will only need the view name to call
+#this query
+create view inner_join_view as 
+select student.student_id, student.first_name, student.last_name, department.department_name from student 
+inner join department on student.student_id= department.student_id;
+
+select * from inner_join_view;
+
+
+
+
+/* 
+Left Join
+Here we gives the important To LEFT TABLE --- It's means we will have all the data of left table and where is not 
+matching will get the null values
+*/
+
+select student.student_id, student.first_name,student.age, department.department_name from student left join department on 
+student.student_id= department.student_id;
+
+
+
+/*
+Right join------ So here we gives the importance to right table
+*/
+
+select student.student_id, student.first_name, student.age, department.department_name from student 
+right join department on student.student_id= department.student_id;
+
+
+
+
+
+
+/*
+Outer join/ full outer join
+So when you need to priority to both the table then we should full outer join
+
+here we use left join, right join and take the union of result
+
+left_join query        union           right_join query
+
+*/
+
+select student.student_id, student.first_name,student.age, department.department_name from student left join department on 
+student.student_id= department.student_id
+union
+select student.student_id, student.first_name, student.age, department.department_name from student 
+right join department on student.student_id= department.student_id;
+
+
+#Let's try to create a view
+
+create view details_for_junior as 
+select student.student_id, student.first_name,student.age, department.department_name from student left join department on 
+student.student_id= department.student_id
+union
+select student.student_id, student.first_name, student.age, department.department_name from student 
+right join department on student.student_id= department.student_id;
+
+
+select * from details_for_junior;
+
+
+
+
+/*
+Cross join-------- It will gives you the combination of all records
+here we don't even need to write the conditions
+*/
+
+
+select student.student_id, student.first_name, student.age, department.department_name from student 
+cross join department;
+
+
+/*
+Natural Join- 
+It shows all the values that are linked by common column(without any condition)
+*/
+
+select student.student_id, student.first_name, student.age, department.department_name from student 
+natural join department;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+SQL STORED PROCEDURE
+SQL procedure query is a query that can be used again & again.
+
+==> It's like creating a function where you use these features---- reusablity, input parameter, output parameter
+
+It can handle complex query also.
+
+
+Syntax-------------
+
+CREATE PROCEDURE 'procedure_name'()
+BEGIN
+------------
+------------
+END	
+
+*/
+
+
+use customer;
+
+
+# So here we are calling this procedure as a function
+/*
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_student_info`()
+BEGIN
+select * from student;
+END
+*/
+
+
+call get_student_info;
+
+
+# input procedure
+/*
+CREATE DEFINER=`root`@`localhost` PROCEDURE `in_student_age`(in age int)
+BEGIN
+select * from student where student.age= age;
+END
+*/
+
+call in_student_age(32);
+
+
+
+#Output procedure
+/*
+
+*/
+
+call out_student_info(@records);
+
+select @records as totalrecords;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
